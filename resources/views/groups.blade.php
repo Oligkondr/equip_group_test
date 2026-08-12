@@ -13,7 +13,14 @@
             <div class="row">
                 @foreach ($products as $product)
                     <div class="col-md-4 mb-3">
-                        <div class="card p-3">{{ $product->name }}</div>
+                        <div class="card p-3">
+                            <div>
+                                <a href="{{ route('product', [$product->id]) }}">
+                                    {{ $product->name }}
+                                </a>
+                            </div>
+                            <div class="mt-2 border-top">{{$product->price->price}} руб.</div>
+                        </div>
                     </div>
                 @endforeach
             </div>

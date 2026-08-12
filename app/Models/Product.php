@@ -10,7 +10,7 @@ class Product extends Model
 {
     public $timestamps = false;
 
-    public function priceValue(): HasOne
+    public function price(): HasOne
     {
         return $this->hasOne(Price::class, 'id_product');
     }

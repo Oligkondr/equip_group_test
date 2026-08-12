@@ -19,7 +19,7 @@ class GroupsController extends Controller
             ->where('id_parent', 0)
             ->get();
 
-        $query = Product::query();
+        $query = Product::query()->with('price');
 
         if ($path) {
             $current = Group::find(last($path));
