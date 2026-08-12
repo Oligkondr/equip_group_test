@@ -41,6 +41,22 @@ class Group extends Model
         });
     }
 
+    public function getPath()
+    {
+        return Cache::remember("group:{$this->id}:get_path", 60 * 30, function () {
+            $result = [];
+
+            $current = $this;
+
+            do {
+                $result[] = $current->id;
+                $current = $current->parent;
+            } while ($current);
+
+            return implode('/', array_reverse($result));
+        });
+    }
+
     private function arrayPluckRecursive(array $array): array
     {
         $results = [];
