@@ -1,0 +1,56 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
+class Group extends Model
+{
+    public $timestamps = false;
+
+    public function products(): HasMany
+    {
+        return $this->hasMany(Product::class, 'id_group');
+    }
+
+    public function parent(): BelongsTo
+    {
+        return $this->belongsTo(Group::class, 'id_parent');
+    }
+
+    public function children(): HasMany
+    {
+        return $this->hasMany(Group::class, 'id_parent');
+    }
+
+    public function childrenRecursive(): HasMany
+    {
+        return $this->children()->with('childrenRecursive');
+    }
+
+    public function getChildrenIds(): array
+    {
+        $result = [$this->id];
+
+        $children = $this->childrenRecursive->toArray();
+
+        return array_merge($result, $this->arrayPluckRecursive($children));
+    }
+
+    private function arrayPluckRecursive(array $array): array
+    {
+        $results = [];
+
+        foreach ($array as $item) {
+            $results[] = $item['id'];
+
+            if ($item['children_recursive']) {
+                $results = array_merge($results, $this->arrayPluckRecursive($item['children_recursive']));
+            }
+        }
+
+        return $results;
+    }
+}
