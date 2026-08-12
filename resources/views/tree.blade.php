@@ -1,6 +1,6 @@
 <li>
     @if(in_array($group->id, $path))
-        <span>{{ $group->name }}</span>
+        <a href="{{ route('groups', $group->getPath()) }}" class="fw-bold">{{ $group->name }}</a>
         @if($group->childrenRecursive->isNotEmpty())
             <ul>
                 @foreach($group->childrenRecursive as $child)
