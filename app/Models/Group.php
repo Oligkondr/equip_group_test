@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Cache;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -32,11 +33,12 @@ class Group extends Model
 
     public function getChildrenIds(): array
     {
-        $result = [$this->id];
+        return Cache::remember("group:{$this->id}:children_ids", 60 * 30, function () {
+            $result = [$this->id];
+            $children = $this->childrenRecursive->toArray();
 
-        $children = $this->childrenRecursive->toArray();
-
-        return array_merge($result, $this->arrayPluckRecursive($children));
+            return array_merge($result, $this->arrayPluckRecursive($children));
+        });
     }
 
     private function arrayPluckRecursive(array $array): array
