@@ -57,6 +57,13 @@ class Group extends Model
         });
     }
 
+    public function getCount(): int
+    {
+        $childrenIds = $this->getChildrenIds();
+
+        return Product::whereIn('id_group', $childrenIds)->count();
+    }
+
     private function arrayPluckRecursive(array $array): array
     {
         $results = [];
