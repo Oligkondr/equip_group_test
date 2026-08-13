@@ -1,5 +1,5 @@
 <li>
-    @if(in_array($group->id, $path))
+    @if(in_array($group->id, $pathList))
         <a href="{{ route('groups', $group->getPath()) }}" class="fw-bold">
             {{ $group->name }} ({{ $group->getCount() }})
         </a>

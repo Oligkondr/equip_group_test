@@ -12,7 +12,7 @@ class GroupsController extends Controller
         $order = request('order');
         $size = request('size', 6);
 
-        $path = array_filter(explode('/', $path));
+        $pathList = array_filter(explode('/', $path));
 
         $groups = Group::query()
             ->with('childrenRecursive')
@@ -21,19 +21,40 @@ class GroupsController extends Controller
 
         $query = Product::query()->with('price');
 
-        if ($path) {
-            $current = Group::find(last($path));
+        if ($pathList) {
+            $current = Group::find(last($pathList));
             $childrenIds = $current->getChildrenIds();
 
             $query->whereIn('id_group', $childrenIds);
         }
 
-        $products = $query->paginate($size);
+        switch ($order) {
+            case 'price_asc':
+                $query->select('products.*')
+                    ->join('prices', 'products.id', '=', 'prices.id_product')
+                    ->orderBy('price');
+                break;
+            case 'price_desc':
+                $query->select('products.*')
+                    ->join('prices', 'products.id', '=', 'prices.id_product')
+                    ->orderByDesc('price');
+                break;
+            case 'name_asc':
+                $query->orderBy('name');
+                break;
+            case 'name_desc':
+                $query->orderByDesc('name');
+                break;
+        }
+
+        $products = $query->paginate($size)->withQueryString();
 
         return view('groups', [
             'path' => $path,
+            'pathList' => $pathList,
             'groups' => $groups,
             'products' => $products,
+            'order' => $order,
         ]);
     }
 }
