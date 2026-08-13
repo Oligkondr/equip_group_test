@@ -6,6 +6,7 @@ use Cache;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Collection;
 
 class Group extends Model
 {
@@ -41,20 +42,23 @@ class Group extends Model
         });
     }
 
-    public function getPath()
+    public function getPath(): string
     {
-        return Cache::remember("group:{$this->id}:get_path", 60 * 30, function () {
-            $result = [];
+        return $this->getParents()->pluck('id')->implode('/');
+    }
 
-            $current = $this;
+    public function getParents(): Collection
+    {
+        $result = collect();
 
-            do {
-                $result[] = $current->id;
-                $current = $current->parent;
-            } while ($current);
+        $current = $this;
 
-            return implode('/', array_reverse($result));
-        });
+        do {
+            $result->push($current);
+            $current = $current->parent;
+        } while ($current);
+
+        return $result->reverse();
     }
 
     public function getCount(): int

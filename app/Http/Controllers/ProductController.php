@@ -8,7 +8,7 @@ class ProductController extends Controller
 {
     public function __invoke(Product $product)
     {
-        $product->load('price');
+        $product->load(['price', 'group']);
 
         return view('product', [
             'product' => $product,
