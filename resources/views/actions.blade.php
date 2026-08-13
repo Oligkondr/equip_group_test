@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-9">
+    <div class="col-12 col-md-9">
         Сортировать:
         <a href="{{ route('groups', [$path, 'order' => 'price_asc', 'size' => $size]) }}"
            class="{{ $order == 'price_asc' ? 'fw-bold' : '' }}"
@@ -31,7 +31,8 @@
             По названию ↓
         </a>
     </div>
-    <div class="col-3 text-end">
+
+    <div class="col-12 col-md-3 text-md-end">
         Выводить:
         @foreach([6, 12, 18] as $s)
             <a href="{{ route('groups', [$path, 'order' => $order, 'size' => $s]) }}"
