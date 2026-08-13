@@ -55,6 +55,7 @@ class GroupsController extends Controller
             'groups' => $groups,
             'products' => $products,
             'order' => $order,
+            'size' => $size,
         ]);
     }
 }
