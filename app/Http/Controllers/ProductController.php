@@ -10,7 +10,7 @@ class ProductController extends Controller
     {
         $product->load(['price', 'group']);
 
-        return view('product', [
+        return view('product.item', [
             'product' => $product,
         ]);
     }

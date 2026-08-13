@@ -6,7 +6,7 @@
         @if($group->childrenRecursive->isNotEmpty())
             <ul>
                 @foreach($group->childrenRecursive as $child)
-                    @include('tree', ['group' => $child])
+                    @include('groups.item', ['group' => $child])
                 @endforeach
             </ul>
         @endif

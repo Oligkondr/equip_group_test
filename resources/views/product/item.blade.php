@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('content')
-    @include('breadcrumbs')
+    @include('product.breadcrumbs')
     <div class="row mt-4">
         <div class="col">
             <h1>{{ $product->name }}</h1>

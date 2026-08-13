@@ -5,13 +5,13 @@
         <div class="col-12 col-md-4 col-lg-3">
             <ul>
                 @foreach($groups as $group)
-                    @include('tree')
+                    @include('groups.item')
                 @endforeach
             </ul>
         </div>
 
         <div class="col-12 col-lg-9">
-            @include('actions')
+            @include('groups.actions')
 
             <div class="row mt-2">
                 @foreach ($products as $product)

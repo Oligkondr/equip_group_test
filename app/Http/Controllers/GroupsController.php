@@ -49,7 +49,7 @@ class GroupsController extends Controller
 
         $products = $query->paginate($size)->withQueryString();
 
-        return view('groups', [
+        return view('groups.list', [
             'path' => $path,
             'pathList' => $pathList,
             'groups' => $groups,
