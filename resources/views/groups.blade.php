@@ -10,7 +10,8 @@
             </ul>
         </div>
         <div class="col-8">
-            <div class="row">
+            @include('order')
+            <div class="row mt-3">
                 @foreach ($products as $product)
                     <div class="col-md-4 mb-3">
                         <div class="card p-3">

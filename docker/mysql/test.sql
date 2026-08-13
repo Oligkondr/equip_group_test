@@ -197,7 +197,7 @@ insert  into `products`(`id`,`id_group`,`name`) values
 (34,31,'Процессор AMD Threadripper 5975WX BOX (без кулера)'),
 (35,32,'Блузка Tom Tailor'),
 (36,32,'Блузка'),
-(37,33,'Рубашка ELIZA group'),
+(37,33,'Рубашка ELIZA groups'),
 (38,33,'Рубашка Boutique. Итальянская мода (журнал)'),
 (39,33,'Рубашка DOCTOR HOUSE'),
 (40,17,'Брюки EA7 Core Identity'),
