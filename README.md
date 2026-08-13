@@ -15,6 +15,8 @@
 
 ```bash
 git clone https://github.com/Oligkondr/equip_group_test.git
+```
+```bash
 cd equip_group_test
 ```
 
@@ -33,8 +35,12 @@ cp .env.example .env
 зависимостями:
 
 ```bash
-docker compose run --rm -u 1000 app composer install
-docker compose run --rm -u 1000 app npm install
+docker run --rm \
+    -u "$(id -u):$(id -g)" \
+    -v "$(pwd):/var/www/html" \
+    -w /var/www/html \
+    composer:latest \
+    composer install --ignore-platform-reqs
 ```
 
 ### 4. Запуск контейнеров
@@ -55,6 +61,8 @@ docker compose run --rm -u 1000 app npm install
 
 ```bash
 ./vendor/bin/sail artisan key:generate
+```
+```bash
 ./vendor/bin/sail artisan migrate
 ```
 
@@ -63,6 +71,9 @@ docker compose run --rm -u 1000 app npm install
 
 ### 6. Сборка фронтенда
 
+```bash
+./vendor/bin/sail npm install
+```
 ```bash
 ./vendor/bin/sail npm run build
 ```
